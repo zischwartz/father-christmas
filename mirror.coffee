@@ -7,6 +7,10 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 
 window.requestAnimationFrame = window.requestAnimationFrame or window.webkitRequestAnimationFrame or window.mozRequestAnimationFrame
 
+# chrome will only allow getusermedia in https
+if window.location.protocol != "https:" and window.location.hostname isnt 'localhost'
+    window.location.href = "https:" + window.location.href.substring(window.location.protocol.length)
+
 class Mirror 
   constructor: (sel="#main")->
     @el = $(sel)
