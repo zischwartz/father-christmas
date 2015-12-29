@@ -1,7 +1,7 @@
 $ = require "jquery"
 node_emoji = require "node-emoji"
 
-d3 = require "d3"
+d3_scale = require "d3-scale"
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -33,12 +33,13 @@ class Mirror
     
     @el.append @mirror
 
-    @scale = d3.scale.quantize().domain([0, 255]).range([4, 3, 2, 1, 0])
+    @scale = d3_scale.quantize().domain([0, 255]).range([4, 3, 2, 1, 0])
 
     @start()
 
   start: ->
     if navigator.getUserMedia
+
       navigator.getUserMedia {audio: false, video: true}, ((stream) =>
         url = window.URL or window.webkitURL
         src = if navigator.getUserMedia then url.createObjectURL(stream) else stream
@@ -50,10 +51,14 @@ class Mirror
 
   animate: =>
     @get_video_data()
+    if @stop then return      
     requestAnimationFrame @animate
 
 
   get_video_data: ->
+    # limit framerate while still using requestAnimationFrame
+    if Date.now()-@last_time < 250 then return 
+    @last_time = Date.now()
     vid_node = @video.get(0)
     # until it's done intializing, these will be 0
     if vid_node["videoWidth"] and vid_node["videoHeight"]
