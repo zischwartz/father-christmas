@@ -10,4 +10,4 @@ gulp
 
 ```
 
-And go to `[localhost:8882](http://localhost:8882)`
+And go to [localhost:8882](http://localhost:8882)
