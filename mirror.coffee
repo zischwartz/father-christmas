@@ -1,6 +1,5 @@
 $ = require "jquery"
 node_emoji = require "node-emoji"
-
 d3_scale = require "d3-scale"
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -39,15 +38,20 @@ class Mirror
 
   start: ->
     if navigator.getUserMedia
-
       navigator.getUserMedia {audio: false, video: true}, ((stream) =>
         url = window.URL or window.webkitURL
         src = if navigator.getUserMedia then url.createObjectURL(stream) else stream
         @video.attr('src', src )
         # and finally
         @animate()
-      ), (error) ->
+      ), (error) =>
+        @navigator_fail(error.code)
         console.error 'Video capture error: ', error.code
+    else
+      @navigator_fail()
+
+  navigator_fail: (code)->
+    @el.html("<div class='error'>Your browser doesn't seem to support your camera. <br><br> Or you need to enable access, &amp; refresh.<br><br>Sorry</div>")
 
   animate: =>
     @get_video_data()

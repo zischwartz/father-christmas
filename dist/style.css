@@ -78,26 +78,14 @@ video {
 #image_holder {
   display: none;
 }
-nav {
-  font-family: sans-serif;
-  padding: 8px 10px 12px 15px;
-  border-radius: 0px 0px 0px 40px;
-  right: 0px;
-  color: white;
-  background-color: rgba(20, 20, 20, 0.5);
-  display: block;
-  position: absolute;
-  z-index: 100;
-}
-nav #question_mark {
-  text-shadow: 0px 0px 4px black;
-}
-nav #info {
-  display: none;
-}
 #main {
   height: 100%;
   width: 100%;
   background: black;
   position: fixed;
+  color: white;
+}
+#main .error {
+  padding: 40px;
+  text-align: center;
 }
